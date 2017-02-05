@@ -2,18 +2,23 @@ package gr.gandg.george.block07;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.NumberPicker;
 
 public class MainActivity extends AppCompatActivity {
 
-    NumberPicker posibilities;
+    NumberPicker possibilities;
+    WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        posibilities = (NumberPicker) findViewById(R.id.numberPicker);
+        possibilities = (NumberPicker) findViewById(R.id.numberPicker);
+        webView = (WebView)findViewById(R.id.webView);
 
         String[] possibilitiesStrings = {
                 "Android",
@@ -21,5 +26,24 @@ public class MainActivity extends AppCompatActivity {
                 "Coursera",
                 "Supelec"
         };
+
+        possibilities.setDisplayedValues(possibilitiesStrings);
+        possibilities.setMinValue(0);
+        possibilities.setMaxValue(possibilitiesStrings.length -1);
+
+    }
+
+    public void navigate(View v) {
+        int choice = possibilities.getValue();
+        if (choice == 0 ) {
+            webView.setWebViewClient(new WebViewClient());
+            webView.loadUrl("file:///android_asset/android.html");
+        } else if (choice == 1)
+            webView.loadUrl("file:///android_asset/checklist.html");
+        else if (choice == 2)
+            webView.loadUrl("http://www.coursera.org");
+        else if (choice == 3)
+            webView.loadUrl("file:///android_asset/supelec.html");
+
     }
 }
